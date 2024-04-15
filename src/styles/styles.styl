@@ -1,0 +1,32 @@
+@import './styleReset.styl'
+@import './variables.styl'
+
+div
+    display: flex
+    flex-direction: column
+    justify-content: flex-start
+    align-items: center
+
+#root
+    margin-top 16px
+    width: 1280px
+    opacity: 0
+    transition(opacity, 1s, 0s)
+
+#root.appeared
+    opacity: 1
+
+body
+    font-size: 14px
+    flexCenter()
+
+img.logoMain
+    max-width: 72px
+    margin-right: 24px
+
+#logoMain
+    opacity: 0
+    transition(opacity, 0.8s, 0s)
+
+#logoMain.appeared
+    opacity: 1 

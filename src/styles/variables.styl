@@ -1,0 +1,27 @@
+defTrans = cubic-bezier(0.6, 0, 0.4, 1)
+
+transition(prop, dur, delay)
+    transition-property: prop
+    transition-duration: dur
+    transition-timing-function: defTrans
+    transition-delay: delay
+
+flexCenter()
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+flex(direction, main, cross)
+    display: flex
+    flex-direction: direction
+    justify-content: main
+    align-items: cross
+
+.defHover
+    transition-property: filter !important
+    transition-duration: 0.2s !important
+    transition-timing-function: defTrans !important
+
+    &:hover
+        filter: opacity(0.7) !important
