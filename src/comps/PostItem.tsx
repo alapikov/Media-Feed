@@ -1,20 +1,26 @@
 import React from 'react';
 import '../styles/styles.styl';
 import Image from '../imgs/postImg.jpeg';
+import { Post } from '../types';
+import { apiBase } from '../data';
+import axios from 'axios';
 
-export const PostItem = () => {
+const PostItem = ({userId, id, title, body}: Post) => {
+    // axios.get(`${apiBase}/users/${userId}`)
+    // .then((res: {data: Post[]}) => {
+    //     console.log(res);
+    // })
+
     return (
         <div className='postItem'>
             <div className='postImgCont'>
                 <img src={Image}></img>
             </div>
-            <h4 className='postTitle'>Пост про путешествия</h4>
-            <p className='postText'>
-                ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident
-                rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt
-                voluptatem rerum illo velit
-            </p>
-            <p className='postAuthor'>Alexander Lapikov, a.d.lapikov@yandex.ru</p>
+            <h4 className='postTitle'>{title}</h4>
+            <p className='postText'>{body}</p>
+            <p className='postAuthor'>{}</p>
         </div>
     );
 };
+
+export default PostItem;

@@ -2,7 +2,7 @@
     "compilerOptions": {
         "outDir": "./dist/",
         "noImplicitAny": true,
-        "module": "es6",
+        "module": "esnext",
         "target": "es5",
         "jsx": "react",
         "checkJs": false,
@@ -12,7 +12,7 @@
         "pretty": true,
         "skipLibCheck": true,
         "strict": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
     },
     "exclude": [
         "node_modules"

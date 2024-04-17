@@ -1,6 +1,6 @@
 import React from 'react';
 import {Header} from './comps/Header';
-import {PostItem} from './comps/PostItem';
+import {FeedPage} from './comps/FeedPage';
 import './styles/styles.styl';
 
 export const App: React.FC = () => {
@@ -13,10 +13,7 @@ export const App: React.FC = () => {
         <>
             <Header />
             <div id='body'>
-                <PostItem />
-                <PostItem />
-                <PostItem />
-                <PostItem />
+                <FeedPage />
             </div>
         </>
     );
