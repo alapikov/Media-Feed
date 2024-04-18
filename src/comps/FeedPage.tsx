@@ -51,9 +51,7 @@ export const FeedPage: React.FC = () => {
         <>
             {postsToRender.map((post) => (
                 <Suspense key={post.id} fallback={<PostItemIsLoading />}>
-                    {/* <div onClick={showMorePosts}> */}
                     <PostItemLazy {...post} />
-                    {/* </div> */}
                 </Suspense>
             ))}
             <div id='observerTarget' ref={observerTarget}></div>
