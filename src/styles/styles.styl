@@ -7,6 +7,11 @@ div
     justify-content: flex-start
     align-items: center
 
+img
+    width: 100%
+    height: 100%
+    object-fit: cover
+
 body
     font-family: 'Roboto'
     font-size: 14px
@@ -46,15 +51,16 @@ body
 #body
     margin-top 160px
 
+#observerTarget
+    margin-top 150px
+
 .postItem
     flex(column, flex-start, center)
     width: 420px
-    margin-bottom 58px
+    margin-bottom 32px
 
     .postImgCont img
         object-fit: cover
-        width: 100%
-        height: 100%
         border-radius: 20px
 
     .postImgCont
@@ -80,4 +86,7 @@ body
         font-size: 14px
         text-align: right
 
-
+.postItemIsLoading
+    width: 100px
+    height: 100px
+    margin-bottom 100px
