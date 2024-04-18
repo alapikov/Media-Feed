@@ -7,7 +7,7 @@ import '../styles/styles.styl';
 
 export const FeedPage: React.FC = () => {
     const idx = useRef(2);
-    const [posts, setPosts] = useState<Post[]>([]);
+    const posts = useRef<Post[]>([]);
     const [postsToRender, setPostsToRender] = useState<Post[]>([]);
     const observerTarget = useRef(null);
 
@@ -15,27 +15,37 @@ export const FeedPage: React.FC = () => {
         // prettier-ignore
         axios.get(`${apiBase}/posts`)
         .then((res: {data: Post[]}) => {
-            setPosts(res.data);
-            setPostsToRender(res.data.slice(0, 2))
+            posts.current = res.data;
+            setPostsToRender(res.data.slice(0, 2))            
         });
     }, []);
 
-    
+    const showMorePosts = () => {
+        const addedPosts = posts.current.slice(idx.current, idx.current + 2);
+        idx.current = idx.current + 2;
+        setPostsToRender((postsToRender) => [...postsToRender, ...addedPosts]);
+    };
 
     useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-          if (entries[0].isIntersecting) {
-            function showMorePosts() {
-                const addedPosts = posts.slice(idx.current, idx.current + 2);
-                idx.current = idx.current + 2;
-                setPostsToRender([...postsToRender, ...addedPosts]);
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    showMorePosts();
+                }
+            },
+            {threshold: 1},
+        );
+
+        if (observerTarget.current) {
+            observer.observe(observerTarget.current);
+        }
+
+        return () => {
+            if (observerTarget.current) {
+                observer.unobserve(observerTarget.current);
             }
-            showMorePosts();
-          }
-        });
-        observer.observe(observerTarget.current!);
-      }, []);
-    
+        };
+    }, [observerTarget]);
 
     return (
         <>
