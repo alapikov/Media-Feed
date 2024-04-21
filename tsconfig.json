@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "outDir": "./dist/",
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "module": "es2022",
         "target": "es2022",
         "jsx": "react",
@@ -11,8 +11,9 @@
         "removeComments": false,
         "pretty": true,
         "skipLibCheck": true,
-        "strict": true,
+        "strict": false,
         "esModuleInterop": true,
+        "lib": ["es5", "es6", "ES2023", "dom", "dom.iterable"]
     },
     "exclude": [
         "node_modules"

@@ -1,10 +1,27 @@
-import React from 'react';
-import '../styles/styles.styl';
-import logoMain from '../imgs/logoMain.png';
+import SortIcon from '@mui/icons-material/Sort';
+import {debounce} from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { colors } from '@mui/material';
+import React, {useContext} from 'react';
+import {PostsContext} from '../globals';
+import logoMain from '../imgs/logoMain.png';
+import '../styles/styles.styl';
 
 export const Header = () => {
+    const [posts, setPostsFn] = useContext(PostsContext);
+
+    const toggleIdSort = () => {
+        const reversePosts = () => {
+            const postsCopy = [...posts];
+            postsCopy.reverse();
+            if (setPostsFn) {
+                setPostsFn(postsCopy);
+            }
+            return null;
+        };
+
+        debounce(reversePosts(), 700);
+    };
+
     return (
         <header id='header'>
             <a href='https://niisva.dev'>
@@ -15,21 +32,24 @@ export const Header = () => {
                 label='Найти публикацию'
                 variant='standard'
                 id='searchField'
+                style={{paddingBottom: '10px'}}
                 sx={{
-                    '& .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused': {
-                        color: '#144d98',
-                    },
-                    '& .css-1eed5fa-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before': {
-                        borderBottom: '2px solid #144d98',
-                    },
+                    '& .css-1eed5fa-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before':
+                        {
+                            borderBottom: '2px solid #144d98',
+                        },
                     '& .css-1eed5fa-MuiInputBase-root-MuiInput-root::after': {
                         borderBottom: '2px solid #144d98',
-                    }
+                    },
                 }}
                 InputProps={{
                     type: 'search',
                 }}
+                onChange={(event) => console.log(event.target.value)}
             />
+            <div id='sortBtn' onClick={() => toggleIdSort()}>
+                <SortIcon />
+            </div>
         </header>
     );
 };

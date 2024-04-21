@@ -1,7 +1,8 @@
 {
+    "plugins": ["prettier-plugin-organize-imports"],
     "printWidth": 100,
     "tabWidth": 4,
-    "semicolons": true,
+    "semi": true,
     "singleQuote": true,
     "jsxSingleQuote": true,
     "bracketSpacing": false,

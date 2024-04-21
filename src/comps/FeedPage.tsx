@@ -1,51 +1,51 @@
-import React, {useState, useEffect, useRef, lazy, Suspense} from 'react';
-import {PostItemIsLoading} from './PostItem';
-import {apiBase} from '../data';
-import {Post} from '../types';
-const axios = require('axios').default;
+import React, {Suspense, lazy, useContext, useEffect, useRef, useState} from 'react';
+import {PostsContext} from '../globals';
 import '../styles/styles.styl';
+import {Post} from '../types';
+import {PostItemIsLoading} from './PostItem';
 
 export const FeedPage: React.FC = () => {
-    const idx = useRef(2);
-    const posts = useRef<Post[]>([]);
+    const idx = useRef(0);
+    const [posts] = useContext(PostsContext);
     const [postsToRender, setPostsToRender] = useState<Post[]>([]);
     const observerTarget = useRef(null);
 
     useEffect(() => {
-        // prettier-ignore
-        axios.get(`${apiBase}/posts`)
-        .then((res: {data: Post[]}) => {
-            posts.current = res.data;
-            setPostsToRender(res.data.slice(0, 2))            
-        });
-    }, []);
+        setPostsToRender(posts.slice(0, idx.current + 2));
+    }, [posts]);
 
     const showMorePosts = () => {
-        const addedPosts = posts.current.slice(idx.current, idx.current + 2);
         idx.current = idx.current + 2;
+        const addedPosts = posts!.slice(idx.current, idx.current + 2);
         setPostsToRender((postsToRender) => [...postsToRender, ...addedPosts]);
     };
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    showMorePosts();
-                }
-            },
-            {threshold: 1},
-        );
+        const runObserver = setTimeout(() => {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    if (entries[0].isIntersecting) {
+                        console.log('is intersecting');
 
-        if (observerTarget.current) {
-            observer.observe(observerTarget.current);
-        }
+                        showMorePosts();
+                    }
+                },
+                {threshold: 1},
+            );
 
-        return () => {
             if (observerTarget.current) {
-                observer.unobserve(observerTarget.current);
+                observer.observe(observerTarget.current);
             }
-        };
-    }, [observerTarget]);
+
+            return () => {
+                if (observerTarget.current) {
+                    observer.unobserve(observerTarget.current);
+                }
+            };
+        }, 1800);
+
+        return () => clearTimeout(runObserver);
+    }, [observerTarget, posts]);
 
     return (
         <>

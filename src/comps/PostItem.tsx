@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
-import '../styles/styles.styl';
-import Image from '../imgs/postImg.jpeg';
-import loadingIcon from '../imgs/loadingIcon.gif';
-import {Post, User, Comment} from '../types';
-import {apiBase} from '../data';
 import axios from 'axios';
-import {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {apiBase} from '../globals';
+import loadingIcon from '../imgs/loadingIcon.gif';
+import Image from '../imgs/postImg.jpeg';
+import '../styles/styles.styl';
+import {Comment, Post} from '../types';
 
 const PostItem = ({userId, id, title, body}: Post) => {
     const [user, setUser] = useState<{name?: string; email?: string}>({});
