@@ -4,9 +4,9 @@ import {apiBase} from '../globals';
 import loadingIcon from '../imgs/loadingIcon.gif';
 import Image from '../imgs/postImg.jpeg';
 import '../styles/styles.styl';
-import {Comment, Post} from '../types';
+import {Comment, PostItemProps} from '../types';
 
-const PostItem = ({userId, id, title, body}: Post) => {
+const PostItem: React.FC<PostItemProps> = ({userId, id, title, body, changePageTo}) => {
     const [user, setUser] = useState<{name?: string; email?: string}>({});
     const [comments, setComments] = useState<Comment[]>([]);
     const [commentsVisible, setCommentsVisibility] = useState<Boolean>(false);
@@ -43,7 +43,7 @@ const PostItem = ({userId, id, title, body}: Post) => {
             </div>
             <h4 className='postTitle'>{title}</h4>
             <p className='postText'>{body}</p>
-            <p className='postAuthor'>
+            <p className='postAuthor' onClick={() => changePageTo('ProfilePage')}>
                 {user.name}, {user.email}
             </p>
             <p className='commentsCounter' onClick={() => toggleComments()}>

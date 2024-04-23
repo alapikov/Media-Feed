@@ -1,25 +1,31 @@
 import SortIcon from '@mui/icons-material/Sort';
-import {debounce} from '@mui/material';
 import TextField from '@mui/material/TextField';
 import React, {useContext} from 'react';
-import {PostsContext} from '../globals';
+import {PostsContext, debounce} from '../globals';
 import logoMain from '../imgs/logoMain.png';
 import '../styles/styles.styl';
 
-export const Header = () => {
-    const [posts, setPostsFn] = useContext(PostsContext);
+export const Header: React.FC = () => {
+    const [postsAll, postsList, setPostsListFn] = useContext(PostsContext);
 
-    const toggleIdSort = () => {
-        const reversePosts = () => {
-            const postsCopy = [...posts];
-            postsCopy.reverse();
-            if (setPostsFn) {
-                setPostsFn(postsCopy);
+    const searchFor = (str: string) => {
+        const filterPosts = () => {
+            if (!str) {
+                setPostsListFn(postsAll)
             }
+            const postsFiltered = postsAll.filter((post) => post.title.includes(str));
+            setPostsListFn(postsFiltered);
+            console.log(postsFiltered);
             return null;
         };
 
-        debounce(reversePosts(), 700);
+        return debounce(filterPosts(), 4000);
+    };
+
+    const toggleIdSort = () => {
+        const postsCopy = [...postsList];
+        postsCopy.reverse();
+        setPostsListFn(postsCopy);
     };
 
     return (
@@ -45,7 +51,7 @@ export const Header = () => {
                 InputProps={{
                     type: 'search',
                 }}
-                onChange={(event) => console.log(event.target.value)}
+                onChange={(event) => searchFor(event.target.value)}
             />
             <div id='sortBtn' onClick={() => toggleIdSort()}>
                 <SortIcon />

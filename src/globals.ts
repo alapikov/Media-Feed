@@ -3,7 +3,7 @@ import {Post, SetPostsFE} from './types';
 
 export const apiBase = 'https://jsonplaceholder.typicode.com';
 
-export const PostsContext = createContext<[Post[], SetPostsFE] | []>([]);
+export const PostsContext = createContext<[Post[], Post[], SetPostsFE] | []>([]);
 
 export const debounce = (fn: Function, ms: number) => {
     let timeout;
@@ -12,3 +12,7 @@ export const debounce = (fn: Function, ms: number) => {
         timeout = setTimeout(() => fn, ms);
     };
 };
+
+export const lazyLoadPosts  = (posts) => {
+    
+}
