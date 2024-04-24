@@ -1,9 +1,17 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import {App} from './App';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import PostsList from './routes/PostsList';
 import './styles/styles.styl';
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <PostsList />,
+    },
+]);
 
 const rootEl = document.getElementById('root')!;
 
 const root = createRoot(rootEl);
-root.render(<App />);
+root.render(<RouterProvider router={router} />);

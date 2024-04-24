@@ -1,32 +1,27 @@
-import React, {Suspense, lazy, useContext, useEffect, useRef, useState} from 'react';
+import React, {Suspense, lazy, useContext, useEffect, useRef, useState, useMemo} from 'react';
 import {PostsContext} from '../globals';
 import '../styles/styles.styl';
-import {Post, FeedPageProps} from '../types';
+import {FeedPageProps, Post} from '../types';
 import {PostItemIsLoading} from './PostItem';
 
 export const FeedPage: React.FC<FeedPageProps> = ({changePageTo}) => {
     const idx = useRef(0);
     const [postsAll, postsList, setPostsListFn] = useContext(PostsContext);
     const [postsToRender, setPostsToRender] = useState<Post[]>([]);
-    const observerTarget = useRef(null);
-    console.log(postsList);
-    
+    const observerTarget = useRef(null);    
 
     useEffect(() => {
-        if (idx.current + 2 <= postsList?.length - 1) {
-            setPostsToRender(postsList.slice(0, idx.current + 2));
-        } else {
-            setPostsToRender(postsList.slice(0, postsList.length - 1));
-        }
+        idx.current = 0;
+        setPostsToRender(postsList.slice(0, 2));
     }, [postsList]);
 
     const showMorePosts = () => {
         idx.current = idx.current + 2;
         let addedPosts;
-        if (idx.current + 2 <= postsList?.length - 1) {
+        if (idx.current + 2 <= postsList.length - 1) {
             addedPosts = postsList.slice(idx.current, idx.current + 2);
         } else {
-            addedPosts = postsList.slice(idx.current, postsList.length - 1);
+            addedPosts = postsList.slice(idx.current);
         }
         setPostsToRender((postsToRender) => [...postsToRender, ...addedPosts]);
     };

@@ -15,7 +15,6 @@ export const Header: React.FC = () => {
             }
             const postsFiltered = postsAll.filter((post) => post.title.includes(str));
             setPostsListFn(postsFiltered);
-            console.log(postsFiltered);
             return null;
         };
 
