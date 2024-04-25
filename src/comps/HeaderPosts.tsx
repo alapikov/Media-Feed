@@ -11,7 +11,7 @@ const HeaderPosts: React.FC = () => {
     const searchFor = (str: string) => {
         const filterPosts = () => {
             if (!str) {
-                setPostsListFn(postsAll)
+                setPostsListFn(postsAll);
             }
             const postsFiltered = postsAll.filter((post) => post.title.includes(str));
             setPostsListFn(postsFiltered);
@@ -52,9 +52,7 @@ const HeaderPosts: React.FC = () => {
                 }}
                 onChange={(event) => searchFor(event.target.value)}
             />
-            <div id='sortBtn' onClick={() => toggleIdSort()}>
-                <SortIcon />
-            </div>
+            <SortIcon classes={{root: 'sortBtn'}} onClick={() => toggleIdSort()} />
         </header>
     );
 };
