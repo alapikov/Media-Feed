@@ -1,10 +1,10 @@
 import React, {Suspense, lazy, useContext, useEffect, useRef, useState, useMemo} from 'react';
 import {PostsContext} from '../globals';
 import '../styles/styles.styl';
-import {FeedPageProps, Post} from '../types';
+import {Post} from '../types';
 import {PostItemIsLoading} from './PostItem';
 
-export const FeedPage: React.FC<FeedPageProps> = ({changePageTo}) => {
+export const FeedPage: React.FC = () => {
     const idx = useRef(0);
     const [postsAll, postsList, setPostsListFn] = useContext(PostsContext);
     const [postsToRender, setPostsToRender] = useState<Post[]>([]);
@@ -55,7 +55,7 @@ export const FeedPage: React.FC<FeedPageProps> = ({changePageTo}) => {
         <>
             {postsToRender.map((post) => (
                 <Suspense key={post.id} fallback={<PostItemIsLoading />}>
-                    <PostItemLazy {...post} changePageTo={changePageTo} />
+                    <PostItemLazy {...post} />
                 </Suspense>
             ))}
             <div id='observerTarget' ref={observerTarget}></div>

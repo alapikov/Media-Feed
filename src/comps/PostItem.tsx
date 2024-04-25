@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import {apiBase} from '../globals';
 import loadingIcon from '../imgs/loadingIcon.gif';
 import Image from '../imgs/postImg.jpeg';
 import '../styles/styles.styl';
-import {Comment, PostItemProps} from '../types';
+import {Comment, Post} from '../types';
 
-const PostItem: React.FC<PostItemProps> = ({userId, id, title, body, changePageTo}) => {
+const PostItem: React.FC<Post> = ({userId, id, title, body}) => {
     const [user, setUser] = useState<{name?: string; email?: string}>({});
     const [comments, setComments] = useState<Comment[]>([]);
     const [commentsVisible, setCommentsVisibility] = useState<Boolean>(false);
@@ -43,9 +44,9 @@ const PostItem: React.FC<PostItemProps> = ({userId, id, title, body, changePageT
             </div>
             <h4 className='postTitle'>{title}</h4>
             <p className='postText'>{body}</p>
-            <p className='postAuthor' onClick={() => changePageTo('ProfilePage')}>
+            <Link to={`user/${userId}`} state={{userId: userId}} className='postAuthor routerLink'>
                 {user.name}, {user.email}
-            </p>
+            </Link>
             <p className='commentsCounter' onClick={() => toggleComments()}>
                 Комментарии: {comments.length}
             </p>

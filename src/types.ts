@@ -38,16 +38,7 @@ export interface Comment {
 }
 
 export type SetPostsFE = (newValue: Post[]) => void;
-type changePageTo = (page: string) => void;
 
-export interface FeedPageProps {
-    changePageTo: changePageTo;
-}
-
-export interface ProfilePageProps {
-    changePageTo: changePageTo;
-}
-
-export interface PostItemProps extends Post {
-    changePageTo: changePageTo;
+export interface ProfileProps {
+    userData: User;
 }

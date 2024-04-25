@@ -5,7 +5,7 @@ import {PostsContext, debounce} from '../globals';
 import logoMain from '../imgs/logoMain.png';
 import '../styles/styles.styl';
 
-export const Header: React.FC = () => {
+const HeaderPosts: React.FC = () => {
     const [postsAll, postsList, setPostsListFn] = useContext(PostsContext);
 
     const searchFor = (str: string) => {
@@ -58,3 +58,5 @@ export const Header: React.FC = () => {
         </header>
     );
 };
+
+export default HeaderPosts;

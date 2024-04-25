@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FeedPage} from '../comps/FeedPage';
-import {Header} from '../comps/Header';
-import {ProfilePage} from '../comps/ProfilePage';
+import HeaderPosts from '../comps/HeaderPosts';
 import {PostsContext, apiBase} from '../globals';
 import '../styles/styles.styl';
 import {Post} from '../types';
@@ -17,11 +16,6 @@ const PostsList: React.FC = () => {
     const [postsList, setPostsList] = useState<Post[]>([]);
     const setPostsListFn = (newValue: Post[]) => setPostsList(newValue);
 
-    const [currPage, setCurrPage] = useState('FeedPage');
-    const changePageTo = (page: string) => {
-        setCurrPage(page);
-    };
-
     useEffect(() => {
         // prettier-ignore
         axios.get(`${apiBase}/posts`)
@@ -34,12 +28,9 @@ const PostsList: React.FC = () => {
     return (
         <>
             <PostsContext.Provider value={[postsAll, postsList, setPostsListFn]}>
-                <Header />
+                <HeaderPosts />
                 <div id='body'>
-                    {currPage === 'FeedPage' ? <FeedPage changePageTo={changePageTo} /> : null}
-                    {currPage === 'ProfilePage' ? (
-                        <ProfilePage changePageTo={changePageTo} />
-                    ) : null}
+                    <FeedPage />
                 </div>
             </PostsContext.Provider>
         </>

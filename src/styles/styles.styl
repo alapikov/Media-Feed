@@ -17,8 +17,13 @@ body
     font-size: 14px
     flexCenter()
 
+.routerLink 
+    text-decoration: none
+    cursor: pointer
+    color: inherit
+
 #root
-    width: 680px
+    width: 620px
     opacity: 0
     transition(opacity, 1.2s, 0s)
 
@@ -52,7 +57,8 @@ body
     cursor pointer
 
 #body
-    margin-top 160px
+    margin-top 120px
+    width: 100%
 
 #observerTarget
     margin-top 150px
@@ -85,14 +91,17 @@ body
         line-height: 22px
         margin-bottom 8px
 
-    p.postAuthor
+    a.postAuthor
         width: 100%
+        color: inherit
         font-size: 16px
         text-align: right
         font-style: italic
         font-weight: 300
         margin-bottom 10px
         cursor: pointer
+        text-decoration: underline
+            
 
 .postItemIsLoading
     width: 100px
@@ -127,6 +136,23 @@ p.commentsCounter
 
 #profileCont
     flex(row, space-between, center)
-    flex-wrap: wrap
-    width: 100%
+    width: 560px
+
+    #profilePhoto
+        width: 180px
+        margin-bottom 31px
+
+    .profileCol
+        flex(column, flex-start, flex-end)
+        width: 260px
+
+        .profileField
+            margin-bottom 15px
+
+        .profileField div 
+            padding-left 12px
+
+.backIcon
+    margin-top 16px
+            
     

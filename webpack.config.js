@@ -53,6 +53,7 @@ module.exports = {
             directory: path.join(__dirname, 'dist'),
         },
         host: 'localhost',
+        hot: true,
         port: 9920,
         open: true,
     },
