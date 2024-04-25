@@ -5,9 +5,9 @@ import {apiBase} from '../globals';
 import loadingIcon from '../imgs/loadingIcon.gif';
 import Image from '../imgs/postImg.jpeg';
 import '../styles/styles.styl';
-import {Comment, Post} from '../types';
+import {Comment, PostItemProps} from '../types';
 
-const PostItem: React.FC<Post> = ({userId, id, title, body}) => {
+const PostItem: React.FC<PostItemProps> = ({userId, id, title, body, showComments}) => {
     const [user, setUser] = useState<{name?: string; email?: string}>({});
     const [comments, setComments] = useState<Comment[]>([]);
     const [commentsVisible, setCommentsVisibility] = useState<Boolean>(false);
@@ -47,16 +47,20 @@ const PostItem: React.FC<Post> = ({userId, id, title, body}) => {
             <Link to={`user/${userId}`} state={{userId: userId}} className='postAuthor routerLink'>
                 {user.name}, {user.email}
             </Link>
-            <p className='commentsCounter' onClick={() => toggleComments()}>
-                Комментарии: {comments.length}
-            </p>
-            {commentsVisible && (
-                <div className='commentsSection' id='sim'>
-                    {comments.map(({email, body}, id) => {
-                        return commentItem(email, body, id);
-                    })}
-                </div>
-            )}
+            {showComments ? (
+                <>
+                    <p className='commentsCounter' onClick={() => toggleComments()}>
+                        Комментарии: {comments.length}
+                    </p>
+                    {commentsVisible && (
+                        <div className='commentsSection' id='sim'>
+                            {comments.map(({email, body}, id) => {
+                                return commentItem(email, body, id);
+                            })}
+                        </div>
+                    )}
+                </>
+            ) : null}
         </div>
     );
 };

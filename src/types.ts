@@ -42,3 +42,7 @@ export type SetPostsFE = (newValue: Post[]) => void;
 export interface ProfileProps {
     userData: User;
 }
+
+export interface PostItemProps extends Post {
+    showComments: boolean;
+}
