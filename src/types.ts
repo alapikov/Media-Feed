@@ -37,6 +37,14 @@ export interface Comment {
     body: string;
 }
 
+export interface Picture {
+    albumId: number;
+    id: number;
+    title: string;
+    url: string;
+    thumbnailUrl: string
+}
+
 export type SetPostsFE = (newValue: Post[]) => void;
 
 export interface ProfileProps {

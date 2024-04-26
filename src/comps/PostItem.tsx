@@ -5,11 +5,12 @@ import {apiBase} from '../globals';
 import loadingIcon from '../imgs/loadingIcon.gif';
 import Image from '../imgs/postImg.jpeg';
 import '../styles/styles.styl';
-import {Comment, PostItemProps} from '../types';
+import {Comment, PostItemProps, Picture} from '../types';
 
 const PostItem: React.FC<PostItemProps> = ({userId, id, title, body, showComments}) => {
     const [user, setUser] = useState<{name?: string; email?: string}>({});
     const [comments, setComments] = useState<Comment[]>([]);
+    const [picture, setPicture] = useState<Picture>(null);
     const [commentsVisible, setCommentsVisibility] = useState<Boolean>(false);
 
     useEffect(() => {
@@ -17,11 +18,13 @@ const PostItem: React.FC<PostItemProps> = ({userId, id, title, body, showComment
             .all([
                 axios.get(`${apiBase}/users/${userId}`),
                 axios.get(`${apiBase}/posts/${id}/comments`),
+                axios.get(`${apiBase}/photos/${id}`),
             ])
             .then(
-                axios.spread((userRes, commentsRes) => {
+                axios.spread((userRes, commentsRes, pictureRes) => {
                     setUser({name: userRes.data.name, email: userRes.data.email});
                     setComments(commentsRes.data);
+                    setPicture(pictureRes.data)
                 }),
             );
     }, []);
@@ -40,7 +43,7 @@ const PostItem: React.FC<PostItemProps> = ({userId, id, title, body, showComment
     return (
         <div className='postItem' id={`post-${id}`}>
             <div className='postImgCont'>
-                <img src={Image}></img>
+                <img src={picture?.url}></img>
             </div>
             <h4 className='postTitle'>{title}</h4>
             <p className='postText'>{body}</p>
@@ -72,5 +75,25 @@ export const PostItemIsLoading = () => {
         </div>
     );
 };
+
+export const PostItemLazyFakeWrap = (props) => {
+    const [isLoading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+      setTimeout(() => {
+        setLoading(false)
+      }, 2000);
+    }, [])
+
+    if (isLoading) {
+        return <PostItemIsLoading />
+    } else {
+        return <PostItem {...props} />
+    }
+};
+
+export const PostItemEditable = () => {
+    const [editMode, setEditMode] = useState(false);
+}
 
 export default PostItem;

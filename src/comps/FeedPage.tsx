@@ -3,6 +3,7 @@ import {PostsContext} from '../globals';
 import '../styles/styles.styl';
 import {Post} from '../types';
 import {PostItemIsLoading} from './PostItem';
+import { PostItemLazyFakeWrap } from './PostItem';
 
 export const FeedPage: React.FC = () => {
     const idx = useRef(0);
@@ -55,15 +56,10 @@ export const FeedPage: React.FC = () => {
         <>
             {postsToRender.map((post) => (
                 <Suspense key={post.id} fallback={<PostItemIsLoading />}>
-                    <PostItemLazy {...post} showComments={true} />
+                    <PostItemLazyFakeWrap {...post} showComments={true} />
                 </Suspense>
             ))}
             <div id='observerTarget' ref={observerTarget}></div>
         </>
     );
 };
-
-const PostItemLazy = lazy(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1800));
-    return import('./PostItem');
-});
