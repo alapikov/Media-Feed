@@ -121,6 +121,26 @@ body
         width: 100%
         height: 100%
 
+.postItemEditable
+    position: relative
+
+    .editBtns
+        width: 40px
+        height: 40px
+        position: absolute
+        right: -72px
+        color: greyMain
+        cursor: pointer
+
+    .editBtns svg
+        margin-bottom: 24px
+        opacity: 1
+        transition(opacity, 0.2s, 0s)
+
+        &:hover
+            opacity: 0.8
+
+
 p.commentsCounter
     font-family: 'Montserrat'
     font-weight: 500

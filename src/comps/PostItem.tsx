@@ -3,15 +3,17 @@ import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {apiBase} from '../globals';
 import loadingIcon from '../imgs/loadingIcon.gif';
-import Image from '../imgs/postImg.jpeg';
 import '../styles/styles.styl';
 import {Comment, PostItemProps, Picture} from '../types';
 
-const PostItem: React.FC<PostItemProps> = ({userId, id, title, body, showComments}) => {
+const PostItem: React.FC<PostItemProps> = ({userId, id, title, body, showComments, editTools = null}) => {
     const [user, setUser] = useState<{name?: string; email?: string}>({});
     const [comments, setComments] = useState<Comment[]>([]);
     const [picture, setPicture] = useState<Picture>(null);
     const [commentsVisible, setCommentsVisibility] = useState<Boolean>(false);
+
+    const [titleValue, setTitleValue] = useState<string>(title);
+    const [bodyValue, setBodyValue] = useState<string>(body);
 
     useEffect(() => {
         axios
@@ -45,8 +47,8 @@ const PostItem: React.FC<PostItemProps> = ({userId, id, title, body, showComment
             <div className='postImgCont'>
                 <img src={picture?.url}></img>
             </div>
-            <h4 className='postTitle'>{title}</h4>
-            <p className='postText'>{body}</p>
+            <h4 className='postTitle' contentEditable={editTools ? editTools.editMode : false} onInput={(e) => setTitleValue(e.currentTarget.textContent)} onBlur={(e) => editTools.titleValue.current = e.target.innerHTML}>{titleValue}</h4>
+            <p className='postText' contentEditable={editTools ? editTools.editMode : false} onBlur={(e) => editTools.bodyValue.current = e.target.innerHTML} onInput={(e) => setBodyValue(e.currentTarget.textContent)}>{bodyValue}</p>
             <Link to={`user/${userId}`} state={{userId: userId}} className='postAuthor routerLink'>
                 {user.name}, {user.email}
             </Link>
@@ -91,9 +93,5 @@ export const PostItemLazyFakeWrap = (props) => {
         return <PostItem {...props} />
     }
 };
-
-export const PostItemEditable = () => {
-    const [editMode, setEditMode] = useState(false);
-}
 
 export default PostItem;

@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 export interface Post {
     userId: User['id'];
     id: number;
@@ -53,4 +54,9 @@ export interface ProfileProps {
 
 export interface PostItemProps extends Post {
     showComments: boolean;
+    editTools: {
+        editMode: boolean;
+        titleValue: React.MutableRefObject<string>;
+        bodyValue: React.MutableRefObject<string>;
+    } | null;
 }

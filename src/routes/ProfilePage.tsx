@@ -43,7 +43,7 @@ const ProfilePage: React.FC = () => {
                 </div>
                 {userPosts?.map((post) => (
                 <Suspense key={post.id} fallback={<PostItemIsLoading />}>
-                    <PostItemLazy {...post} showComments={false} />
+                    <PostItemEditableLazy {...post} showComments={false} />
                 </Suspense>
             ))}
             </div>
@@ -51,9 +51,9 @@ const ProfilePage: React.FC = () => {
     );
 };
 
-const PostItemLazy = lazy(async () => {
+const PostItemEditableLazy = lazy(async () => {
     await new Promise((resolve) => setTimeout(resolve, 1800));
-    return import('../comps/PostItem');
+    return import('../comps/PostItemEditable');
 });
 
 export default ProfilePage;
