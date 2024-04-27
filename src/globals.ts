@@ -12,7 +12,3 @@ export const debounce = (fn: Function, ms: number) => {
         timeout = setTimeout(() => fn, ms);
     };
 };
-
-export const lazyLoadPosts  = (posts) => {
-    
-}

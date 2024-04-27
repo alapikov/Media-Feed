@@ -1,7 +1,6 @@
-import { useRef } from 'react';
 export interface Post {
     userId: User['id'];
-    id: number;
+    id?: number;
     title: string;
     body: string;
 }
@@ -43,7 +42,7 @@ export interface Picture {
     id: number;
     title: string;
     url: string;
-    thumbnailUrl: string
+    thumbnailUrl: string;
 }
 
 export type SetPostsFE = (newValue: Post[]) => void;
@@ -53,10 +52,9 @@ export interface ProfileProps {
 }
 
 export interface PostItemProps extends Post {
-    showComments: boolean;
     editTools: {
         editMode: boolean;
-        titleValue: React.MutableRefObject<string>;
-        bodyValue: React.MutableRefObject<string>;
+        setTitleValue: any;
+        setBodyValue: any;
     } | null;
 }

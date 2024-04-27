@@ -2,8 +2,8 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import PostsList from './routes/PostsList';
-import './styles/styles.styl';
 import ProfilePage from './routes/ProfilePage';
+import './styles/styles.styl';
 
 const router = createBrowserRouter([
     {
@@ -11,7 +11,7 @@ const router = createBrowserRouter([
         element: <PostsList />,
     },
     {
-        path: "user/:userId",
+        path: 'user/:userId',
         element: <ProfilePage />,
     },
 ]);

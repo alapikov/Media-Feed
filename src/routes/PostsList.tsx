@@ -20,8 +20,9 @@ const PostsList: React.FC = () => {
         // prettier-ignore
         axios.get(`${apiBase}/posts`)
         .then((res: {data: Post[]}) => {
-            setPostsAll(res.data)
-            setPostsList(res.data)
+            setPostsAll(res.data);
+            setPostsList(res.data);
+            sessionStorage.setItem('postsCount', res.data.length.toString())
         });
     }, []);
 

@@ -1,15 +1,14 @@
-import React, {Suspense, lazy, useContext, useEffect, useRef, useState, useMemo} from 'react';
+import React, {Suspense, useContext, useEffect, useRef, useState} from 'react';
 import {PostsContext} from '../globals';
 import '../styles/styles.styl';
 import {Post} from '../types';
-import {PostItemIsLoading} from './PostItem';
-import { PostItemLazyFakeWrap } from './PostItem';
+import {PostItemIsLoading, PostItemLazyFakeWrap} from './PostItem';
 
 export const FeedPage: React.FC = () => {
     const idx = useRef(0);
     const [postsAll, postsList, setPostsListFn] = useContext(PostsContext);
     const [postsToRender, setPostsToRender] = useState<Post[]>([]);
-    const observerTarget = useRef(null);    
+    const observerTarget = useRef(null);
 
     useEffect(() => {
         idx.current = 0;

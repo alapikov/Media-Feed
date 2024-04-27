@@ -1,10 +1,11 @@
-import React, {useEffect, useState, lazy, Suspense} from 'react';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import React, {Suspense, lazy, useEffect, useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import HeaderProfile from '../comps/HeaderProfile';
+import {PostItemIsLoading} from '../comps/PostItem';
 import Profile from '../comps/Profile';
 import {apiBase} from '../globals';
-import {User, Post} from '../types';
-import {PostItemIsLoading} from '../comps/PostItem';
+import {Post, User} from '../types';
 const axios = require('axios').default;
 
 const ProfilePage: React.FC = () => {
@@ -16,6 +17,16 @@ const ProfilePage: React.FC = () => {
     const {state} = useLocation();
     const [userData, setUserData] = useState<User | null>(null);
     const [userPosts, setUserPosts] = useState<Post[] | null>(null);
+
+    const createNewPost = () => {
+        const userId = state.userId;
+        const props = {
+            userId: userId,
+            title: 'Введите заголовок',
+            body: 'Введите текст поста',
+        };
+        return props;
+    };
 
     useEffect(() => {
         // prettier-ignore
@@ -40,12 +51,20 @@ const ProfilePage: React.FC = () => {
                 <Profile {...userData} />
                 <div id='userPostsCont'>
                     <p id='userPostsTitle'>Список публикаций {userData?.username}</p>
+                    <div
+                        id='addPostBtn'
+                        onClick={() =>
+                            setUserPosts((usersPosts) => [createNewPost(), ...usersPosts])
+                        }
+                    >
+                        <AddCircleIcon />
+                    </div>
+                    {userPosts?.map((post) => (
+                        <Suspense key={post.id} fallback={<PostItemIsLoading />}>
+                            <PostItemEditableLazy {...post} showComments={false} />
+                        </Suspense>
+                    ))}
                 </div>
-                {userPosts?.map((post) => (
-                <Suspense key={post.id} fallback={<PostItemIsLoading />}>
-                    <PostItemEditableLazy {...post} showComments={false} />
-                </Suspense>
-            ))}
             </div>
         </>
     );
